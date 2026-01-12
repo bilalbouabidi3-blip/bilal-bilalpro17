@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BayanStudy | بيان ستادي - منصتك الذكية للتعلم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        edura: {
+                            navy: '#1e3a8a',
+                            blue: '#3b82f6',
+                            gold: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Advanced 3D Icon Styling */
+        .icon-3d-container {
+            perspective: 1200px;
+        }
+        
+        .icon-3d {
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+        
+        .icon-3d i {
+            display: inline-block;
+            transform: translateZ(40px);
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.3));
+            transition: all 0.6s ease;
+        }
+
+        .group:hover .icon-3d {
+            transform: rotateY(20deg) rotateX(10deg) translateY(-5px);
+        }
+        
+        .group:hover .icon-3d i {
+            transform: translateZ(60px) scale(1.05);
+        }
+
+        /* Floating Animation for Desktop-feel */
+        @keyframes float-complex {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(0.5deg); }
+            66% { transform: translateY(-5px) rotate(-0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .floating-3d {
+            animation: float-complex 8s ease-in-out infinite;
+        }
+
+        /* Desktop Perspective Tilt */
+        .rotate-x-6 { transform: rotateX(6deg); }
+        .rotate-y-minus-6 { transform: rotateY(-6deg); }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0"
+  }
+}
+</script>
+</head>
+<body class="bg-white text-gray-900 dark:bg-slate-950 dark:text-gray-100">
+    <div id="root"></div>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
