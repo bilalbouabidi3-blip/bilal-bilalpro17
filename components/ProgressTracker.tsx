@@ -14,6 +14,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ subjects, lang }) => 
   });
   
   const [newScore, setNewScore] = useState({ subjectId: subjects[0]?.id || '', score: '', total: '20' });
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('bayan_scores', JSON.stringify(scores));
@@ -33,6 +34,9 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ subjects, lang }) => 
     
     setScores([entry, ...scores]);
     setNewScore({ ...newScore, score: '' });
+
+    setIsUpdating(true);
+    setTimeout(() => setIsUpdating(false), 500);
   };
 
   const labels: any = {
@@ -68,7 +72,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ subjects, lang }) => 
   return (
     <div className="max-w-4xl mx-auto space-y-8 pb-20">
       <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-blue-600 p-8 rounded-[2rem] text-white shadow-xl flex flex-col items-center justify-center text-center">
+        <div className={`bg-blue-600 p-8 rounded-[2rem] text-white shadow-xl flex flex-col items-center justify-center text-center transition-all duration-500 ease-out ${isUpdating ? 'scale-105 shadow-blue-500/50' : 'shadow-blue-500/20'}`}>
           <span className="text-blue-100 font-bold mb-2 uppercase tracking-wider">{t.average}</span>
           <div className="text-5xl font-black">{calculateAverage()}</div>
           <span className="text-blue-200 mt-2">/ 20</span>
@@ -129,7 +133,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ subjects, lang }) => 
               const sub = subjects.find(s => s.id === score.subjectId);
               const percent = (score.score / score.total) * 100;
               return (
-                <div key={score.id} className="flex flex-col md:flex-row md:items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-slate-800/50 group">
+                <div key={score.id} className="flex flex-col md:flex-row md:items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-slate-800/50 group animate-in fade-in slide-in-from-top-3 duration-500">
                   <div className="flex items-center gap-4 min-w-[200px]">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white" style={{ backgroundColor: sub?.color || '#3b82f6' }}>
                       <i className={`fas ${sub?.icon || 'fa-book'}`}></i>
@@ -140,7 +144,7 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ subjects, lang }) => 
                     </div>
                   </div>
                   <div className="flex-1 h-3 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-600 rounded-full" style={{ width: `${percent}%` }}></div>
+                    <div className="h-full bg-blue-600 rounded-full transition-all duration-1000 ease-out" style={{ width: `${percent}%` }}></div>
                   </div>
                   <div className="text-right min-w-[80px]">
                     <span className="text-lg font-black text-blue-600">{score.score}</span>

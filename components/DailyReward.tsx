@@ -45,24 +45,48 @@ const DailyReward: React.FC<DailyRewardProps> = ({ lang }) => {
   };
 
   const translations: any = {
-    ar: { title: "هدية اليوم", streak: "تتابع دراسي:", days: "أيام", claim: "احصل على هديتك", claimed: "تم الاستلام", congrats: "مبروك! +10 نقاط", subtitle: "سجل دخولك يومياً" },
-    en: { title: "Daily Gift", streak: "Study Streak:", days: "Days", claim: "Claim Gift", claimed: "Claimed", congrats: "Congrats! +10 pts", subtitle: "Log in daily" },
-    fr: { title: "Cadeau du Jour", streak: "Série d'étude :", days: "Jours", claim: "Récupérer", claimed: "Récupéré", congrats: "Félicitations ! +10 pts", subtitle: "Connectez-vous" },
-    tr: { title: "Günlük Hediye", streak: "Çalışma Serisi:", days: "Gün", claim: "Hediyeni Al", claimed: "Alındı", congrats: "Tebrikler! +10 puan", subtitle: "Günlük giriş yapın" },
-    zh: { title: "每日礼物", streak: "连续学习：", days: "天", claim: "领取礼物", claimed: "已领取", congrats: "恭喜！+10 分", subtitle: "每日登录解锁功能" }
+    ar: {
+      title: "هدية اليوم",
+      streak: "تتابع دراسي:",
+      days: "أيام",
+      claim: "احصل على هديتك",
+      claimed: "تم الاستلام بنجاح",
+      congrats: "مبروك! حصلت على 10 نقاط ذكاء إضافية",
+      subtitle: "سجل دخولك يومياً لفتح ميزات حصرية"
+    },
+    en: {
+      title: "Daily Gift",
+      streak: "Study Streak:",
+      days: "Days",
+      claim: "Claim Your Gift",
+      claimed: "Claimed Successfully",
+      congrats: "Congrats! You got 10 extra AI points",
+      subtitle: "Log in daily to unlock exclusive features"
+    },
+    fr: {
+      title: "Cadeau du Jour",
+      streak: "Série d'étude :",
+      days: "Jours",
+      claim: "Récupérer mon cadeau",
+      claimed: "Récupéré avec succès",
+      congrats: "Félicitations ! +10 points IA",
+      subtitle: "Connectez-vous quotidiennement"
+    }
   };
 
   const t = translations[lang] || translations.ar;
 
   return (
-    <div className="relative group icon-3d-container">
+    <div className="relative group">
       {showCelebration && (
         <div className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="animate-bounce bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-2xl font-black">{t.congrats} 🎉</div>
+          <div className="animate-bounce bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-2xl font-black">
+            {t.congrats} 🎉
+          </div>
         </div>
       )}
 
-      <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2.5rem] p-8 text-white shadow-2xl overflow-hidden relative">
+      <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2.5rem] p-8 text-white shadow-2xl overflow-hidden relative icon-3d-container">
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
         <div className="relative z-10 flex flex-col items-center text-center">
           <div className={`icon-3d mb-6 w-20 h-20 bg-white/20 rounded-[2rem] flex items-center justify-center text-4xl shadow-inner border border-white/30 ${!hasClaimed ? 'floating-3d' : ''}`}>
@@ -76,7 +100,9 @@ const DailyReward: React.FC<DailyRewardProps> = ({ lang }) => {
             {[1, 2, 3, 4, 5, 6, 7].map((day) => (
               <div key={day} className={`w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-black transition-all ${
                 streak >= day ? 'bg-yellow-400 text-blue-900 scale-110 shadow-lg' : 'bg-white/10 text-white/40'
-              }`}>{day}</div>
+              }`}>
+                {day}
+              </div>
             ))}
           </div>
 
@@ -84,7 +110,7 @@ const DailyReward: React.FC<DailyRewardProps> = ({ lang }) => {
             onClick={claimReward}
             disabled={hasClaimed}
             className={`w-full py-4 rounded-2xl font-black text-lg transition-all transform active:scale-95 shadow-xl ${
-              hasClaimed ? 'bg-white/10 text-white/50 cursor-default' : 'bg-yellow-400 text-blue-900 hover:bg-yellow-300'
+              hasClaimed ? 'bg-white/10 text-white/50 cursor-default' : 'bg-yellow-400 text-blue-900 hover:bg-yellow-300 hover:-translate-y-1'
             }`}
           >
             {hasClaimed ? t.claimed : t.claim}
