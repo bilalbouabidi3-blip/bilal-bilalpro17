@@ -11,27 +11,27 @@ const Hero: React.FC<HeroProps> = ({ onStart, lang }) => {
   const content: any = {
     ar: {
       title: "مستقبلك يبدأ مع بيان ستادي",
-      desc: "المنصة الذكية الأولى في المغرب المخصصة لنجاح الطلاب. دروس تفاعلية، تمارين مصححة، ومساعد ذكي يدعمك.",
-      ctaPrimary: "ابدأ المراجعة",
-      ctaSecondary: "المساعد الذكي",
-      join: "انضم لـ +10,000 طالب",
+      desc: "المنصة الذكية الأولى في المغرب المخصصة لنجاح الطلاب. دروس تفاعلية، تمارين مصححة، ومساعد ذكي يدعمك في كل خطوة من مسارك الدراسي.",
+      ctaPrimary: "ابدأ المراجعة الآن",
+      ctaSecondary: "جرب المساعد الذكي",
+      join: "انضم لـ +10,000 طالب متفوق",
       badge1: "تمارين مصححة",
       badge2: "ذكاء اصطناعي"
     },
     en: {
       title: "Your Future Starts with BayanStudy",
-      desc: "The premier smart platform in Morocco for student success. Interactive lessons and AI support.",
-      ctaPrimary: "Start Now",
-      ctaSecondary: "AI Assistant",
-      join: "Join +10,000 students",
+      desc: "The premier smart platform in Morocco dedicated to student success. Interactive lessons, corrected exercises, and a smart assistant supporting every step of your journey.",
+      ctaPrimary: "Start Reviewing Now",
+      ctaSecondary: "Try Smart Assistant",
+      join: "Join +10,000 elite students",
       badge1: "Corrected Exercises",
-      badge2: "AI Support"
+      badge2: "Artificial Intelligence"
     },
     fr: {
-      title: "Votre Avenir Commence ici",
-      desc: "La plateforme intelligente au Maroc pour réussir vos études. Cours interactifs et IA.",
-      ctaPrimary: "Réviser",
-      ctaSecondary: "Assistant IA",
+      title: "Votre Avenir Commence avec BayanStudy",
+      desc: "La première plateforme intelligente au Maroc dédiée à la réussite des élèves. Cours interactifs, exercices corrigés et un assistant IA à vos côtés.",
+      ctaPrimary: "Réviser Maintenant",
+      ctaSecondary: "Essayer l'Assistant IA",
       join: "Rejoignez +10,000 élèves",
       badge1: "Exercices Corrigés",
       badge2: "Intelligence Artificielle"
@@ -41,18 +41,20 @@ const Hero: React.FC<HeroProps> = ({ onStart, lang }) => {
   const t = content[lang] || content.ar;
 
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-slate-950 pt-10 md:pt-16 pb-20 md:pb-32 transition-colors duration-300">
-      <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-        <div className={`text-${lang === 'ar' ? 'right' : 'left'} z-10 flex flex-col items-center lg:items-start`}>
-          <div className="relative inline-block">
-             <h1 className="text-4xl md:text-7xl font-black text-blue-900 dark:text-white mb-6 leading-tight text-center lg:text-start typing-effect">
-               {t.title}
-             </h1>
-          </div>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed max-w-xl text-center lg:text-start">
+    <div className="relative overflow-hidden bg-white dark:bg-slate-950 pt-16 pb-32 transition-colors duration-300">
+      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div className={`text-${lang === 'ar' ? 'right' : 'left'} z-10`}>
+          <h1 className="text-5xl md:text-7xl font-black text-blue-900 dark:text-white mb-6 leading-tight">
+            {t.title.split(' ').map((word: string, i: number) => 
+              ['بيان', 'ستادي', 'BayanStudy'].includes(word)
+              ? <span key={i} className="text-blue-600 dark:text-blue-400 inline-block hover:scale-110 transition-transform cursor-default">{word} </span> 
+              : word + ' '
+            )}
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 leading-relaxed max-w-xl">
             {t.desc}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <div className="flex gap-4">
             <button 
               onClick={() => onStart(AppSection.COURSES)}
               className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl active:scale-95"
@@ -67,35 +69,39 @@ const Hero: React.FC<HeroProps> = ({ onStart, lang }) => {
             </button>
           </div>
           
-          <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">
-            <div className={`flex -space-x-3 ${lang === 'ar' ? 'space-x-reverse' : ''}`}>
+          <div className="mt-12 flex items-center gap-6">
+            <div className={`flex -space-x-4 ${lang === 'ar' ? 'space-x-reverse' : ''}`}>
               {[1, 2, 3, 4].map(i => (
-                <img key={i} className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-800 object-cover shadow-md" src={`https://picsum.photos/seed/${i+10}/100/100`} alt="student" />
+                <img key={i} className="w-12 h-12 rounded-full border-4 border-white dark:border-slate-800 object-cover shadow-lg transform hover:-translate-y-2 transition-all cursor-pointer" src={`https://picsum.photos/seed/${i+10}/100/100`} alt="student" />
               ))}
             </div>
-            <p className="text-gray-500 dark:text-gray-400 font-bold text-sm">{t.join}</p>
+            <p className="text-gray-500 dark:text-gray-400 font-bold">{t.join}</p>
           </div>
         </div>
         
-        <div className="relative icon-3d-container flex justify-center lg:block">
-          <div className="absolute top-0 -right-4 z-20 bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-xl floating-3d border border-gray-100 dark:border-slate-700 hidden sm:block">
-             <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center"><i className="fas fa-check"></i></div>
-                <div className="font-black text-xs dark:text-white">{t.badge1}</div>
+        <div className="relative icon-3d-container">
+          <div className="absolute top-10 -right-4 z-20 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-2xl floating-3d border border-gray-100 dark:border-slate-700 hidden lg:block">
+             <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl">
+                   <i className="fas fa-check-circle"></i>
+                </div>
+                <div className="font-black text-sm dark:text-white">{t.badge1}</div>
              </div>
           </div>
 
-          <div className="absolute bottom-0 -left-4 z-20 bg-white dark:bg-slate-800 p-3 rounded-2xl shadow-xl floating-3d border border-gray-100 dark:border-slate-700 hidden sm:block" style={{animationDelay: '-3s'}}>
-             <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center"><i className="fas fa-bolt"></i></div>
-                <div className="font-black text-xs dark:text-white">{t.badge2}</div>
+          <div className="absolute bottom-10 -left-4 z-20 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-2xl floating-3d border border-gray-100 dark:border-slate-700 hidden lg:block" style={{animationDelay: '-3s'}}>
+             <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xl">
+                   <i className="fas fa-bolt"></i>
+                </div>
+                <div className="font-black text-sm dark:text-white">{t.badge2}</div>
              </div>
           </div>
 
           <img 
             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800&h=600" 
             alt="Learning" 
-            className="rounded-[2.5rem] md:rounded-[3rem] relative z-10 border-4 md:border-8 border-white dark:border-slate-800 shadow-2xl w-full max-w-[500px]"
+            className="rounded-[3rem] hero-img-3d relative z-10 border-8 border-white dark:border-slate-800"
           />
         </div>
       </div>

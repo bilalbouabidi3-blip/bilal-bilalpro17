@@ -19,11 +19,6 @@
                             blue: '#3b82f6',
                             gold: '#f59e0b'
                         }
-                    },
-                    borderRadius: {
-                        '4xl': '2rem',
-                        '5xl': '2.5rem',
-                        '6xl': '3rem',
                     }
                 }
             }
@@ -33,24 +28,20 @@
         body {
             font-family: 'Tajawal', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
-            -webkit-font-smoothing: antialiased;
         }
         .custom-scrollbar::-webkit-scrollbar {
-            width: 5px;
+            width: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #3b82f6;
             border-radius: 10px;
-        }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #334155;
         }
         .glass {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         .dark .glass {
@@ -58,45 +49,52 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
+        /* Advanced 3D Icon Styling */
         .icon-3d-container {
-            perspective: 1000px;
+            perspective: 1200px;
         }
         
         .icon-3d {
             transform-style: preserve-3d;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
         }
         
-        .group:hover .icon-3d {
-            transform: rotateY(15deg) rotateX(10deg) translateZ(20px);
+        .icon-3d i {
+            display: inline-block;
+            transform: translateZ(40px);
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.3));
+            transition: all 0.6s ease;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        .group:hover .icon-3d {
+            transform: rotateY(25deg) rotateX(15deg) translateY(-10px);
+        }
+        
+        .group:hover .icon-3d i {
+            transform: translateZ(70px) scale(1.1);
+        }
+
+        /* Floating Animation */
+        @keyframes float-complex {
+            0% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-15px) rotateX(5deg); }
+            100% { transform: translateY(0px) rotateX(0deg); }
         }
         
         .floating-3d {
-            animation: float 4s ease-in-out infinite;
+            animation: float-complex 6s ease-in-out infinite;
         }
 
-        /* Animations for Modals */
-        .animate-in {
-            animation-duration: 0.3s;
-            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            animation-fill-mode: both;
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .fade-in { animation-name: fadeIn; }
-        .zoom-in-95 { animation-name: zoomIn; }
     </style>
 <script type="importmap">
 {
@@ -109,7 +107,20 @@
 }
 </script>
 </head>
-<body class="bg-white text-gray-900 dark:bg-slate-950 dark:text-gray-100 selection:bg-blue-100 selection:text-blue-900">
+<body class="bg-white text-gray-900 dark:bg-slate-950 dark:text-gray-100">
     <div id="root"></div>
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        window.addEventListener('scroll', () => {
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
