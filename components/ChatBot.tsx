@@ -9,15 +9,27 @@ interface ChatBotProps {
 
 const ChatBot: React.FC<ChatBotProps> = ({ lang }) => {
   const intros: any = {
-    ar: 'مرحباً! أنا رفيقك الدراسي الذكي. كيف يمكنني مساعدتك اليوم؟',
-    en: 'Hello! I am your smart study companion. How can I help you today?',
-    fr: 'Bonjour ! Je suis ton tuteur intelligent. Comment puis-je t\'aider aujourd\'hui ?'
+    ar: 'أهلاً بك! أنا رفيقك الدراسي الذكي. يمكنني مساعدتك في شرح الدروس، حل التمارين، أو حتى تنظيم وقتك. ماذا تريد أن تراجع اليوم؟',
+    en: 'Hello! I am your smart study companion. I can help you explain lessons, solve exercises, or even organize your time. What would you like to review today?',
+    fr: 'Bonjour ! Je suis ton tuteur intelligent. Je peux t\'aider à expliquer les cours, résoudre des exercices ou même organiser ton temps. Que souhaites-tu réviser aujourd\'hui ?'
   };
 
   const labels: any = {
-    ar: { header: 'المساعد الدراسي الذكي', sub: 'متصل وجاهز لمساعدتك', placeholder: 'اسألني عن أي تمرين أو شرح...' },
-    en: { header: 'Smart Study Assistant', sub: 'Connected and ready to help', placeholder: 'Ask me about any exercise or explanation...' },
-    fr: { header: 'Assistant Intelligent', sub: 'Connecté et prêt à t\'aider', placeholder: 'Pose-moi une question sur tes cours...' }
+    ar: { 
+      header: 'المساعد الدراسي الذكي', 
+      sub: 'جاهز للإجابة على تساؤلاتك فوراً', 
+      placeholder: 'اكتب سؤالك أو اسم التمرين هنا...' 
+    },
+    en: { 
+      header: 'Smart Study Assistant', 
+      sub: 'Ready to answer your questions instantly', 
+      placeholder: 'Type your question or exercise name here...' 
+    },
+    fr: { 
+      header: 'Assistant Intelligent', 
+      sub: 'Prêt à répondre à vos questions instantanément', 
+      placeholder: 'Tapez votre question ou le nom de l\'exercice ici...' 
+    }
   };
 
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -42,7 +54,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ lang }) => {
     setLoading(true);
 
     const responseText = await getAITutorResponse(input);
-    const modelMsg: ChatMessage = { role: 'model', text: responseText || "حدث خطأ ما" };
+    const modelMsg: ChatMessage = { role: 'model', text: responseText || "عذراً، لم أتمكن من المعالجة حالياً. يرجى المحاولة لاحقاً." };
     
     setMessages(prev => [...prev, modelMsg]);
     setLoading(false);

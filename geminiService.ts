@@ -8,17 +8,17 @@ export const getAITutorResponse = async (userMessage: string, context?: string) 
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: context 
-        ? `Context: ${context}\n\nStudent asks: ${userMessage}`
+        ? `السياق التعليمي: ${context}\n\nسؤال الطالب: ${userMessage}`
         : userMessage,
       config: {
-        systemInstruction: "أنت مساعد دراسي ذكي لموقع BayanStudy. أنت خبير في المنهج المغربي (الابتدائي، الإعدادي، التأهيلي). اجعل إجاباتك مشجعة، واضحة، وباللغة العربية الفصحى أو الدارجة المغربية المهذبة عند الحاجة لتبسيط المفاهيم. ركز على الرياضيات والعلوم واللغات.",
+        systemInstruction: "أنت المساعد الدراسي الرسمي لمنصة BayanStudy. خبير في المنظومة التربوية المغربية (ابتدائي، إعدادي، ثانوي تأهيلي). إجاباتك يجب أن تكون دقيقة، محفزة، وباللغة العربية الفصحى المبسطة. عند شرح الرياضيات أو العلوم، التزم بالمصطلحات العلمية المعتمدة في المغرب (بالعربية أو الفرنسية حسب المسلك). ركز على مساعدة الطالب في فهم 'كيفية الحل' وليس فقط تقديم الإجابة النهائية.",
         temperature: 0.7,
       },
     });
     return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
-    return "عذراً، واجهت مشكلة في الاتصال. حاول مرة أخرى.";
+    return "عذراً، واجهت مشكلة التقنية في معالجة طلبك. يرجى المحاولة بعد لحظات.";
   }
 };
 
@@ -26,7 +26,7 @@ export const generateQuiz = async (subject: string, level: string) => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: `أنشئ 3 أسئلة اختيار من متعدد في مادة ${subject} لمستوى ${level} في المغرب.`,
+      contents: `أنشئ 3 أسئلة اختيار من متعدد في مادة ${subject} لمستوى ${level} وفق المقررات المغربية.`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -39,7 +39,7 @@ export const generateQuiz = async (subject: string, level: string) => {
                 type: Type.ARRAY, 
                 items: { type: Type.STRING } 
               },
-              correctAnswer: { type: Type.INTEGER, description: "Index of the correct option (0-3)" }
+              correctAnswer: { type: Type.INTEGER, description: "رقم الإجابة الصحيحة (0-3)" }
             },
             required: ["question", "options", "correctAnswer"]
           }

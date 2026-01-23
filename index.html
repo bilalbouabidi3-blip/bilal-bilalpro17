@@ -14,10 +14,9 @@
             theme: {
                 extend: {
                     colors: {
-                        edura: {
-                            navy: '#1e3a8a',
-                            blue: '#3b82f6',
-                            gold: '#f59e0b'
+                        brand: {
+                            blue: '#004aad',
+                            navy: '#002d72',
                         }
                     }
                 }
@@ -29,6 +28,97 @@
             font-family: 'Tajawal', sans-serif;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
+        /* Splash Screen Styling */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+        }
+        .dark #splash-screen {
+            background: #0f172a;
+        }
+
+        .splash-logo {
+            width: 150px;
+            height: 150px;
+            animation: splash-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes splash-pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(0,74,173,0)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 20px rgba(0,74,173,0.3)); }
+        }
+
+        /* Magic Cursor Styling - Matching Official Blue */
+        #magic-cursor {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: #004aad;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease-out, width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+            mix-blend-mode: multiply;
+            opacity: 0.6;
+            display: none;
+        }
+
+        .dark #magic-cursor {
+            mix-blend-mode: screen;
+            opacity: 0.8;
+            background-color: #3b82f6;
+        }
+
+        #magic-cursor.cursor-grow {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(0, 74, 173, 0.15);
+            opacity: 0.4;
+            transform: translate(-25px, -25px);
+        }
+
+        /* Brand Hover Effect */
+        .brand-highlight {
+            position: relative;
+            display: inline-block;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .brand-highlight::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 4px;
+            bottom: -2px;
+            left: 50%;
+            background: #004aad;
+            border-radius: 10px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateX(-50%);
+        }
+
+        .brand-highlight:hover {
+            color: #004aad !important;
+        }
+
+        .brand-highlight:hover::after {
+            width: 100%;
+        }
+
+        .dark .brand-highlight:hover {
+            color: #3b82f6 !important;
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
@@ -36,7 +126,7 @@
             background: transparent;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #3b82f6;
+            background: #004aad;
             border-radius: 10px;
         }
         .glass {
@@ -49,7 +139,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        /* Advanced 3D Icon Styling */
         .icon-3d-container {
             perspective: 1200px;
         }
@@ -75,7 +164,6 @@
             transform: translateZ(70px) scale(1.1);
         }
 
-        /* Floating Animation */
         @keyframes float-complex {
             0% { transform: translateY(0px) rotateX(0deg); }
             50% { transform: translateY(-15px) rotateX(5deg); }
@@ -95,6 +183,10 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        @media (hover: none) and (pointer: coarse) {
+            #magic-cursor { display: none !important; }
+        }
     </style>
 <script type="importmap">
 {
@@ -107,9 +199,35 @@
 }
 </script>
 </head>
-<body class="bg-white text-gray-900 dark:bg-slate-950 dark:text-gray-100">
+<body class="bg-white text-gray-900 dark:bg-slate-950 dark:text-gray-100 overflow-x-hidden">
+    <!-- Initial Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 10H60C75 10 85 20 85 35C85 45 80 50 75 53C82 56 88 64 88 75C88 90 78 100 63 100H20V10Z" fill="#004aad"/>
+                <path d="M45 40C45 35 48 32 52 32H75C70 32 65 35 65 40V70C65 75 70 78 75 78H52C48 78 45 75 45 70V40Z" fill="white"/>
+                <path d="M25 40C25 35 28 32 32 32H55C50 32 45 35 45 40V70C45 75 50 78 55 78H32C28 78 25 75 25 70V40Z" fill="white" opacity="0.9"/>
+            </svg>
+        </div>
+        <h1 class="mt-6 text-2xl font-black text-[#002d72] dark:text-blue-400 lowercase tracking-tighter">bayanstudy</h1>
+    </div>
+
+    <div id="magic-cursor"></div>
+
     <div id="root"></div>
+
     <script>
+        // Handle Splash Screen Removal
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.visibility = 'hidden';
+                }, 800);
+            }, 1200);
+        });
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -121,6 +239,52 @@
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
+
+        const cursor = document.getElementById('magic-cursor');
+        let cursorX = 0;
+        let cursorY = 0;
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            if (cursor.style.display === 'none' || cursor.style.display === '') {
+                cursor.style.display = 'block';
+            }
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            cursor.style.transform = `translate(-50%, -50%)`;
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.addEventListener('mouseover', (e) => {
+            const target = e.target;
+            const isInteractive = target.closest('button, a, select, input, .cursor-pointer, .brand-highlight, [role="button"]');
+            
+            if (isInteractive) {
+                cursor.classList.add('cursor-grow');
+            } else {
+                cursor.classList.remove('cursor-grow');
+            }
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursor.style.display = 'none';
+        });
+        document.addEventListener('mouseenter', () => {
+            cursor.style.display = 'block';
+        });
+
     </script>
 </body>
 </html>

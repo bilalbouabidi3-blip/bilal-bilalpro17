@@ -12,10 +12,8 @@ interface AIFunction {
   name: string;
   desc: string;
   icon: string;
-  isPaid?: boolean;
-  trend?: string;
-  color?: string;
-  tools?: ToolLink[];
+  color: string;
+  tools: ToolLink[];
 }
 
 interface AICategory {
@@ -34,142 +32,189 @@ const AIToolkit: React.FC<AIToolkitProps> = ({ lang }) => {
   const categories: Record<string, AICategory[]> = {
     ar: [
       {
-        title: "التلخيص والكتابة",
-        icon: "fa-file-alt",
+        title: "إدارة المستندات والتعلم",
+        icon: "fa-folder-open",
         functions: [
-          { 
-            name: "تلخيص الدروس", 
-            desc: "حول الدروس الطويلة إلى ملخصات ذكية ومركزة", 
-            icon: "fa-compress-alt", 
-            isPaid: false, 
-            trend: "1.2k+", 
-            color: "#3b82f6",
+          {
+            name: "📁 ملفات PDF وملخصات ذكية",
+            desc: "أدوات لتحويل ملفات PDF المعقدة والمراجع الطويلة إلى ملخصات مركزة وقابلة للدردشة.",
+            icon: "fa-file-pdf",
+            color: "#ef4444",
             tools: [
-              { name: "BayanSummary (خاص)", desc: "أداة الموقع الداخلية لتلخيص المناهج المغربية", url: "#", isFree: true },
-              { name: "ChatPDF", desc: "لرفع ملفات الدروس وتلخيصها فوراً", url: "https://www.chatpdf.com", isFree: true },
-              { name: "Humata AI", desc: "ممتاز للأبحاث الطويلة والمعقدة", url: "https://www.humata.ai", isFree: false }
+              { name: "ChatPDF", desc: "الموقع الأشهر للدردشة مع ملفاتك.", url: "https://www.chatpdf.com", isFree: true },
+              { name: "Humata AI", desc: "مساعد ذكي للمستندات العلمية والتقنية.", url: "https://www.humata.ai", isFree: true },
+              { name: "AskYourPDF", desc: "نظام تفاعلي متقدم للملفات الدراسية.", url: "https://askyourpdf.com", isFree: true },
+              { name: "Scholarcy", desc: "تفكيك الأوراق البحثية لبطاقات ملخص.", url: "https://www.scholarcy.com", isFree: true },
+              { name: "SciSummary", desc: "تلخيص الأبحاث العلمية الطويلة فوراً.", url: "https://scisummary.com", isFree: true },
+              { name: "PDF.ai", desc: "دردشة وتحليل للملفات القانونية والدراسية.", url: "https://pdf.ai", isFree: true },
+              { name: "LightPDF AI", desc: "مجموعة أدوات PDF شاملة بالذكاء.", url: "https://lightpdf.com", isFree: true },
+              { name: "Sharly AI", desc: "تلخيص جماعي للمستندات والكتب.", url: "https://www.sharly.ai", isFree: true },
+              { name: "Docalysis", desc: "تحليل ذكي للميزانيات والتقارير الطويلة.", url: "https://docalysis.com", isFree: false },
+              { name: "Unsummary", desc: "أداة ذكية لاختصار المحتوى الأكاديمي.", url: "https://unsummary.com", isFree: true },
+              { name: "SmallPDF AI", desc: "دمج، ضغط وتلخيص الملفات بذكاء.", url: "https://smallpdf.com/ai-pdf", isFree: true },
+              { name: "Explainpaper", desc: "شرح الأبحاث المعقدة بلغة بسيطة.", url: "https://www.explainpaper.com", isFree: true },
+              { name: "Paper Digest", desc: "ملخصات ورقية للباحثين في دقائق.", url: "https://paper-digest.com", isFree: true },
+              { name: "PopAi", desc: "مساعد شامل للمستندات والبحث.", url: "https://www.popai.pro", isFree: true },
+              { name: "Skim AI", desc: "متصفح ذكي يقرأ الملفات عنك.", url: "https://skim.ai", isFree: true },
+              { name: "Genei", desc: "تلخيص وتنظيم المصادر العلمية.", url: "https://www.genei.io", isFree: false },
+              { name: "Casper AI", desc: "امتداد كروم لتلخيص أي مقال فوراً.", url: "https://casper.ai", isFree: true }
             ]
           },
-          { 
-            name: "توسيع النص", 
-            desc: "أضف تفاصيل وشروحات إضافية لفقراتك المختصرة", 
-            icon: "fa-expand-arrows-alt", 
-            isPaid: false, 
+          {
+            name: "📑 تنظيم وملاحظات ذكية",
+            desc: "نظم معرفتك، دون دروسك، واربط أفكارك باستخدام أنظمة الذكاء الاصطناعي.",
+            icon: "fa-brain",
             color: "#8b5cf6",
             tools: [
-              { name: "Wordtune", desc: "إعادة صياغة وتوسيع الجمل بذكاء", url: "https://www.wordtune.com", isFree: true },
-              { name: "Copy.ai", desc: "مساعد كتابة إبداعي شامل", url: "https://www.copy.ai", isFree: false }
+              { name: "Notion AI", desc: "المساعد الشامل للملاحظات والمشاريع.", url: "https://www.notion.so", isFree: true },
+              { name: "Mem.ai", desc: "مفكرة ذكية تنظم ذاتها تلقائياً.", url: "https://mem.ai", isFree: true },
+              { name: "Obsidian Canvas", desc: "بناء خرائط ذهنية ذكية لأفكارك.", url: "https://obsidian.md", isFree: true },
+              { name: "Reflect Notes", desc: "ربط الملاحظات بأسلوب العقل البشري.", url: "https://reflect.app", isFree: false },
+              { name: "Napkin AI", desc: "تحويل الأفكار النصية لرسوم بصرية.", url: "https://www.napkin.ai", isFree: true },
+              { name: "Logseq", desc: "تنظيم المعرفة بأسلوب مفتوح المصدر.", url: "https://logseq.com", isFree: true },
+              { name: "Heptabase", desc: "لوحة بصرية للأبحاث المعقدة.", url: "https://heptabase.com", isFree: false },
+              { name: "Taskade AI", desc: "منصة ملاحظات وتعاون ذكية.", url: "https://www.taskade.com", isFree: true },
+              { name: "MyMind", desc: "ذاكرة رقمية لكل ما تراه على الويب.", url: "https://mymind.com", isFree: true },
+              { name: "Readwise Reader", desc: "تنظيم تظليلات الكتب والمقالات.", url: "https://readwise.io", isFree: false },
+              { name: "Otter.ai", desc: "تحويل المحاضرات الصوتية لملاحظات.", url: "https://otter.ai", isFree: true },
+              { name: "Fireflies.ai", desc: "تسجيل وتلخيص اللقاءات الدراسية.", url: "https://fireflies.ai", isFree: true },
+              { name: "Evernote AI", desc: "بحث ذكي داخل الملاحظات والملفات.", url: "https://evernote.com", isFree: true },
+              { name: "Jamie", desc: "تدوين ملخصات الاجتماعات والمحاضرات.", url: "https://meetjamie.ai", isFree: false },
+              { name: "Mindgrasp AI", desc: "تحويل أي فيديو أو ملف لملاحظات.", url: "https://mindgrasp.ai", isFree: true },
+              { name: "NoteGPT", desc: "تلخيص يوتيوب وتحويله لملاحظات.", url: "https://notegpt.io", isFree: true }
             ]
-          },
-          { name: "مساعد المقالات", desc: "بناء هيكل المقالات الأدبية والفلسفية باحترافية", icon: "fa-pen-fancy", isPaid: true, color: "#ec4899", tools: [{ name: "Jasper", desc: "أقوى كاتب محتوى بالذكاء الاصطناعي", url: "https://www.jasper.ai", isFree: false }] },
-          { name: "تصحيح لغوي", desc: "تدقيق إملائي ونحوي ذكي لجميع النصوص", icon: "fa-spell-check", isPaid: false, trend: "800+", color: "#10b981", tools: [{ name: "Grammarly", desc: "التدقيق الأفضل للإنجليزية", url: "https://www.grammarly.com", isFree: true }, { name: "أداة تدقيق العربية", desc: "خاصة ببيان ستادي", url: "#", isFree: true }] }
+          }
         ]
       },
       {
-        title: "الأسئلة والاختبارات",
-        icon: "fa-question-circle",
+        title: "الإنتاجية وإدارة الوقت",
+        icon: "fa-stopwatch",
         functions: [
-          { 
-            name: "توليد كويزات", 
-            desc: "إنشاء أسئلة MCQ تفاعلية من أي نص تعليمي", 
-            icon: "fa-tasks", 
-            isPaid: false, 
-            trend: "2.5k+", 
-            color: "#f59e0b",
+          {
+            name: "📅 جداول ومهام ذكية",
+            desc: "أدوات لإدارة وقتك، بناء جداولك الدراسية، والتغلب على التسويف.",
+            icon: "fa-calendar-check",
+            color: "#10b981",
             tools: [
-              { name: "Quizgecko", desc: "حول أي نص أو رابط إلى اختبار", url: "https://quizgecko.com", isFree: true },
-              { name: "Conker", desc: "توليد اختبارات كاملة في ثوانٍ", url: "https://www.conker.ai", isFree: true }
+              { name: "Reclaim.ai", desc: "جدولة العادات والمهام في تقويم جوجل.", url: "https://reclaim.ai", isFree: true },
+              { name: "Motion.so", desc: "تخطيط تلقائي ليومك بذكاء اصطناعي.", url: "https://www.usemotion.com", isFree: false },
+              { name: "Clockwise", desc: "تحسين جدول المواعيد لزيادة التركيز.", url: "https://www.getclockwise.com", isFree: true },
+              { name: "Sunsama", desc: "مخطط يومي يركز على الهدوء والعمل.", url: "https://sunsama.com", isFree: false },
+              { name: "Any.do AI", desc: "إدارة مهام مع مساعد ذكي مدمج.", url: "https://www.any.do", isFree: true },
+              { name: "BeforeSunset AI", desc: "تخطيط ذكي لإنهاء المهام بإنتاجية.", url: "https://www.beforesunset.ai", isFree: true },
+              { name: "BeeDone", desc: "تحويل المهام إلى لعبة محفزة (Gamification).", url: "https://beedone.co", isFree: true },
+              { name: "Trevor AI", desc: "جدولة مهام تعتمد على الكتل الزمنية.", url: "https://www.trevorai.com", isFree: true },
+              { name: "Akiflow", desc: "تجميع المهام من كل التطبيقات في مكان واحد.", url: "https://akiflow.com", isFree: false },
+              { name: "SkedPal", desc: "الجدولة التلقائية الأكثر ذكاءً.", url: "https://www.skedpal.com", isFree: false },
+              { name: "Zapier AI", desc: "أتمتة المهام الدراسية الروتينية.", url: "https://zapier.com", isFree: true },
+              { name: "Flowace", desc: "تتبع الوقت والإنتاجية آلياً.", url: "https://flowace.ai", isFree: true },
+              { name: "Todoist AI", desc: "تنظيم المهام بفلترة ذكية.", url: "https://todoist.com", isFree: true },
+              { name: "Monday.com AI", desc: "إدارة المشاريع الدراسية الجماعية.", url: "https://monday.com", isFree: true },
+              { name: "Asana AI", desc: "متابعة تقدم المشاريع بذكاء.", url: "https://asana.com", isFree: true },
+              { name: "ClickUp Brain", desc: "مساعد ذكي داخل لوحة المهام.", url: "https://clickup.com", isFree: true }
             ]
-          },
-          { name: "حلول التمارين", desc: "شرح مفصل لخطوات حل المسائل الرياضية المعقدة", icon: "fa-calculator", isPaid: true, color: "#ef4444", tools: [{ name: "Photomath", desc: "حل المسائل عبر الكاميرا", url: "https://photomath.com", isFree: true }, { name: "Symbolab", desc: "آلة حاسبة علمية ذكية", url: "https://www.symbolab.com", isFree: true }] },
-          { name: "محاكي الامتحانات", desc: "التدريب على نماذج الامتحانات الوطنية السابقة", icon: "fa-graduation-cap", isPaid: false, color: "#6366f1", tools: [{ name: "أرشيف الامتحانات", desc: "قاعدة بيانات الامتحانات المغربية", url: "#", isFree: true }] },
-          { name: "بطاقات الذاكرة", desc: "صناعة Flashcards ذكية للمراجعة والحفظ السريع", icon: "fa-clone", isPaid: false, color: "#06b6d4", tools: [{ name: "Anki", desc: "نظام التكرار المتباعد الأشهر", url: "https://apps.ankiweb.net/", isFree: true }, { name: "Quizlet", desc: "دراسة عبر الألعاب والبطاقات", url: "https://quizlet.com", isFree: true }] }
+          }
         ]
       },
       {
-        title: "الوسائط والعروض",
-        icon: "fa-project-diagram",
+        title: "صناعة المحتوى والإبداع",
+        icon: "fa-wand-sparkles",
         functions: [
-          { 
-            name: "توليد الصور", 
-            desc: "تحويل المفاهيم العلمية إلى رسوم توضيحية دقيقة", 
-            icon: "fa-palette", 
-            isPaid: true, 
-            trend: "400+", 
-            color: "#f43f5e",
+          {
+            name: "المساعدات اللغوية والدردشة",
+            desc: "أقوى المحركات الذكية للإجابة على التساؤلات المعقدة وكتابة البحوث.",
+            icon: "fa-comment-dots",
+            color: "#3b82f6",
             tools: [
-              { name: "DALL-E 3", desc: "دقة متناهية في فهم النصوص", url: "https://openai.com/dall-e-3", isFree: false },
-              { name: "Canva Magic Media", desc: "توليد صور داخل تصاميمك", url: "https://www.canva.com", isFree: true }
+              { name: "ChatGPT", desc: "الرائد عالمياً في المحادثة وحل المسائل.", url: "https://chat.openai.com", isFree: true },
+              { name: "Gemini", desc: "ذكاء جوجل المتكامل للبحث والمستندات.", url: "https://gemini.google.com", isFree: true },
+              { name: "Claude", desc: "يتميز بالدقة العالية والأسلوب الطبيعي.", url: "https://claude.ai", isFree: true },
+              { name: "Perplexity AI", desc: "محرك بحث إجابات موثقة بالمصادر.", url: "https://www.perplexity.ai", isFree: true },
+              { name: "Poe", desc: "دخول لكل نماذج الذكاء في منصة واحدة.", url: "https://poe.com", isFree: true },
+              { name: "Jasper", desc: "متخصص في الكتابة الإبداعية والأكاديمية.", url: "https://jasper.ai", isFree: false },
+              { name: "Copy.ai", desc: "توليد نصوص وبحوث سريعة بذكاء.", url: "https://copy.ai", isFree: true },
+              { name: "Writesonic", desc: "كتابة مقالات طويلة بجودة احترافية.", url: "https://writesonic.com", isFree: true },
+              { name: "QuillBot", desc: "إعادة صياغة وتلخيص النصوص ببراعة.", url: "https://quillbot.com", isFree: true },
+              { name: "Grammarly", desc: "تصحيح لغوي ونحوي ذكي للمقالات.", url: "https://grammarly.com", isFree: true },
+              { name: "Rytr", desc: "مساعد كتابة بسيط وفعال يدعم العربية.", url: "https://rytr.me", isFree: true },
+              { name: "DeepL Write", desc: "تحسين جودة الكتابة باللغات الأجنبية.", url: "https://www.deepl.com/write", isFree: true },
+              { name: "HuggingChat", desc: "بديل مجاني ومفتوح المصدر للدردشة.", url: "https://huggingface.co/chat", isFree: true },
+              { name: "Wordtune", desc: "إعادة صياغة الجمل بأساليب متعددة.", url: "https://wordtune.com", isFree: true },
+              { name: "HyperWrite", desc: "مساعد كتابة يتعلم أسلوبك الشخصي.", url: "https://hyperwriteai.com", isFree: true }
             ]
-          },
-          { name: "منشئ العروض", desc: "تصميم شرائح PowerPoint متكاملة بضغطة واحدة", icon: "fa-chalkboard", isPaid: true, color: "#8b5cf6", tools: [{ name: "Gamma.app", desc: "أفضل منشئ عروض تقديمية حالياً", url: "https://gamma.app", isFree: true }, { name: "Tome", desc: "سرد قصصي وعروض بصرية مبهرة", url: "https://tome.app", isFree: false }] },
-          { name: "تحويل النص لصوت", desc: "تحويل الملخصات المكتوبة إلى ملفات صوتية مسموعة", icon: "fa-volume-up", isPaid: false, color: "#3b82f6", tools: [{ name: "ElevenLabs", desc: "أصوات بشرية واقعية جداً", url: "https://elevenlabs.io", isFree: true }] },
-          { name: "مخططات ذهنية", desc: "رسم خرائط مفاهيمية أوتوماتيكية لتنظيم الأفكار", icon: "fa-sitemap", isPaid: false, trend: "600+", color: "#10b981", tools: [{ name: "Whimsical", desc: "خرائط ذهنية ذكية وسريعة", url: "https://whimsical.com", isFree: true }, { name: "Miro AI", desc: "مساحة تعاونية للتفكير البصري", url: "https://miro.com", isFree: true }] }
+          }
         ]
       }
     ]
   };
 
-  // Map to FR versions
-  const categoriesFR: AICategory[] = categories.ar.map(cat => ({
-    ...cat,
-    title: cat.title === "التلخيص والكتابة" ? "Rédaction & Résumé" : 
-           cat.title === "الأسئلة والاختبارات" ? "Tests & Quiz" : "Média & Présentations",
-    functions: cat.functions.map(f => ({
-      ...f,
-      name: f.name === "تلخيص الدروس" ? "Résumer les cours" : 
-            f.name === "توسيع النص" ? "Expansion de texte" :
-            f.name === "مساعد المقالات" ? "Assistant Rédaction" :
-            f.name === "تصحيح لغوي" ? "Correction" : 
-            f.name === "توليد كويزات" ? "Générer Quiz" :
-            f.name === "حلول التمارين" ? "Solutions" :
-            f.name === "محاكي الامتحانات" ? "Simulateur" :
-            f.name === "بطاقات الذاكرة" ? "Flashcards" :
-            f.name === "توليد الصور" ? "Images IA" :
-            f.name === "منشئ العروض" ? "Présentations" :
-            f.name === "تحويل النص لصوت" ? "Synthèse Vocale" : "Cartes Mentales",
-      desc: f.desc.includes("حول الدروس") ? "Transformez vos cours en résumés intelligents." : f.desc
-    }))
-  }));
-
   const translations: any = {
-    ar: { free: "مجاني", paid: "مدفوع", visit: "فتح الأداة", more: "عرض كل الخدمات", featured: "خدمات ذكية متميزة", back: "عودة للقائمة", availableTools: "الأدوات المتوفرة لهذه الخدمة" },
-    en: { free: "Free", paid: "Paid", visit: "Open Tool", more: "Show all services", featured: "Featured AI Services", back: "Back to menu", availableTools: "Tools available for this service" },
-    fr: { free: "Gratuit", paid: "Payant", visit: "Ouvrir", more: "Tous les services", featured: "Services IA Vedettes", back: "Retour", availableTools: "Outils disponibles" }
+    ar: { 
+      free: "مجاني / محدود", 
+      paid: "مدفوع", 
+      visit: "فتح الأداة", 
+      featured: "أقوى مواقع الذكاء الاصطناعي للطلاب", 
+      back: "العودة للقائمة الرئيسية", 
+      availableTools: "المواقع المختارة (أكثر من 15 لكل فئة)", 
+      subtitle: "استخدم هذه الأدوات لتسريع دراستك، تنظيم وقتك، وتلخيص دروسك بذكاء."
+    }
   };
+
   const t = translations[lang] || translations.ar;
-  const currentCats = lang === 'fr' ? categoriesFR : (categories[lang] || categories.ar);
+  const currentCats = categories[lang] || categories.ar;
 
   if (activeFunction) {
     return (
-      <div className="w-full max-w-4xl mx-auto px-4 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <button onClick={() => setActiveFunction(null)} className="mb-8 flex items-center gap-2 text-blue-600 font-bold hover:gap-4 transition-all">
-          <i className={`fas fa-arrow-${lang === 'ar' ? 'right' : 'left'}`}></i> {t.back}
+      <div className="w-full max-w-6xl mx-auto px-4 py-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
+        <button 
+          onClick={() => setActiveFunction(null)} 
+          className="mb-10 flex items-center gap-3 text-blue-600 font-black hover:gap-5 transition-all group"
+        >
+          <i className={`fas fa-arrow-${lang === 'ar' ? 'right' : 'left'} group-hover:scale-125`}></i> {t.back}
         </button>
-        <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-12 shadow-2xl border border-blue-50 dark:border-slate-800">
-          <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mb-12">
-            <div className="icon-3d w-24 h-24 rounded-[2rem] flex items-center justify-center text-5xl shadow-2xl" style={{ backgroundColor: `${activeFunction.color}15`, color: activeFunction.color }}>
+        
+        <div className="bg-white dark:bg-slate-900 rounded-[3.5rem] p-8 md:p-16 shadow-2xl border border-blue-50 dark:border-slate-800 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full -mr-40 -mt-40 blur-3xl"></div>
+          
+          <div className="flex flex-col md:flex-row gap-10 items-center md:items-start mb-16 relative z-10">
+            <div className="icon-3d w-28 h-28 rounded-[2.5rem] flex items-center justify-center text-6xl shadow-2xl border-4 border-white dark:border-slate-800" style={{ backgroundColor: `${activeFunction.color}15`, color: activeFunction.color }}>
               <i className={`fas ${activeFunction.icon}`}></i>
             </div>
-            <div className="text-center md:text-right flex-1">
-              <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-4">{activeFunction.name}</h2>
-              <p className="text-xl text-slate-500 dark:text-slate-400 leading-relaxed">{activeFunction.desc}</p>
+            <div className={`text-center ${lang === 'ar' ? 'md:text-right' : 'md:text-left'} flex-1`}>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">{activeFunction.name}</h2>
+              <p className="text-xl text-slate-500 dark:text-slate-400 leading-relaxed font-medium">{activeFunction.desc}</p>
             </div>
           </div>
-          <h3 className="text-xl font-black text-slate-800 dark:text-white mb-6 border-b border-gray-100 dark:border-slate-800 pb-4">{t.availableTools}</h3>
-          <div className="grid gap-4">
-            {activeFunction.tools?.map((tool, idx) => (
-              <a key={idx} href={tool.url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between p-6 rounded-3xl bg-gray-50 dark:bg-slate-800/50 hover:bg-blue-600 dark:hover:bg-blue-600 transition-all border border-transparent hover:border-blue-400">
-                <div className="flex items-center gap-6">
-                  <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-700 flex items-center justify-center text-blue-600 shadow-sm group-hover:scale-110 transition-transform"><i className="fas fa-link"></i></div>
-                  <div>
-                    <h4 className="font-black text-lg text-slate-800 dark:text-white group-hover:text-white">{tool.name}</h4>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100">{tool.desc}</p>
+
+          <h3 className="text-2xl font-black text-slate-800 dark:text-white mb-8 border-b-2 border-gray-100 dark:border-slate-800 pb-6 flex items-center gap-3">
+             <i className="fas fa-list-check text-blue-600"></i> {t.availableTools}
+          </h3>
+
+          <div className="grid gap-4 max-h-[65vh] overflow-y-auto pr-4 custom-scrollbar">
+            {activeFunction.tools.map((tool, idx) => (
+              <a 
+                key={idx} 
+                href={tool.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group flex flex-col sm:flex-row items-center justify-between p-6 rounded-[2rem] bg-gray-50 dark:bg-slate-800/40 hover:bg-blue-600 dark:hover:bg-blue-600 transition-all border border-transparent hover:border-blue-400 hover:shadow-xl"
+              >
+                <div className="flex items-center gap-6 mb-4 sm:mb-0">
+                  <div className="w-14 h-14 rounded-2xl bg-white dark:bg-slate-700 flex items-center justify-center text-blue-600 shadow-md group-hover:scale-110 group-hover:rotate-12 transition-all">
+                    <i className="fas fa-arrow-up-right-from-square text-xl"></i>
+                  </div>
+                  <div className={lang === 'ar' ? 'text-right' : 'text-left'}>
+                    <h4 className="font-black text-lg text-slate-800 dark:text-white group-hover:text-white mb-1">{tool.name}</h4>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-blue-100 font-medium">{tool.desc}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase ${tool.isFree ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{tool.isFree ? t.free : t.paid}</span>
-                  <div className="text-slate-300 group-hover:text-white transition-colors"><i className={`fas fa-external-link-alt`}></i></div>
+                <div className="flex items-center gap-6">
+                  <span className={`text-[10px] font-black px-4 py-2 rounded-xl uppercase tracking-wider ${tool.isFree ? 'bg-emerald-100 text-emerald-700 group-hover:bg-emerald-400 group-hover:text-white' : 'bg-amber-100 text-amber-700 group-hover:bg-amber-400 group-hover:text-white'}`}>
+                    {tool.isFree ? t.free : t.paid}
+                  </span>
+                  <div className="text-slate-300 group-hover:text-white transition-colors text-lg">
+                    <i className={`fas fa-chevron-${lang === 'ar' ? 'left' : 'right'}`}></i>
+                  </div>
                 </div>
               </a>
             ))}
@@ -180,43 +225,38 @@ const AIToolkit: React.FC<AIToolkitProps> = ({ lang }) => {
   }
 
   return (
-    <div className="space-y-12 w-full max-w-7xl mx-auto px-4">
-      <div className="text-center mb-8"><h2 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{t.featured}</h2><div className="h-1.5 w-20 bg-blue-600 mx-auto rounded-full"></div></div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {currentCats.flatMap(c => c.functions).slice(0, 4).map((func, idx) => (
-          <div key={idx} onClick={() => setActiveFunction(func)} className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-[2.5rem] p-7 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all group icon-3d-container cursor-pointer">
-            <div className="flex items-center justify-between mb-6">
-              <div className="icon-3d w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg" style={{ backgroundColor: `${func.color}15`, color: func.color }}><div className="icon-3d-base"></div><i className={`fas ${func.icon} text-2xl`}></i></div>
-              <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border ${func.isPaid ? 'bg-amber-50 text-amber-600 border-amber-100' : 'bg-emerald-50 text-emerald-600 border-emerald-100'}`}>{func.isPaid ? t.paid : t.free}</div>
-            </div>
-            <h4 className="text-xl font-black text-slate-800 dark:text-white mb-3 group-hover:text-blue-600 transition-colors">{func.name}</h4>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mb-8 line-clamp-2 leading-relaxed">{func.desc}</p>
-            <button className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-xl shadow-blue-500/20 active:scale-95"><i className="fas fa-bolt-lightning text-xs"></i>{t.visit}</button>
-          </div>
-        ))}
+    <div className="space-y-16 w-full max-w-7xl mx-auto px-4 pb-20">
+      <div className="text-center mb-12 animate-in fade-in slide-in-from-top-4 duration-1000">
+        <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">{t.featured}</h2>
+        <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto mb-8 font-medium">{t.subtitle}</p>
+        <div className="h-2 w-24 bg-blue-600 mx-auto rounded-full shadow-lg shadow-blue-600/30"></div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
-        {currentCats.map((cat, idx) => (
-          <div key={idx} className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-[3rem] p-8 shadow-sm hover:shadow-lg transition-shadow">
-            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-50 dark:border-slate-800">
-              <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-600 dark:text-slate-300 icon-3d"><i className={`fas ${cat.icon} text-xl`}></i></div>
-              <h3 className="text-xl font-black text-slate-800 dark:text-white">{cat.title}</h3>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {currentCats.flatMap(c => c.functions).map((func, idx) => (
+          <div 
+            key={idx} 
+            onClick={() => setActiveFunction(func)} 
+            className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-[3rem] p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all group icon-3d-container cursor-pointer relative overflow-hidden reveal"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-600/5 rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-700"></div>
+            <div className="flex items-center justify-between mb-8 relative z-10">
+              <div 
+                className="icon-3d w-16 h-16 rounded-[1.5rem] flex items-center justify-center shadow-xl" 
+                style={{ backgroundColor: `${func.color}15`, color: func.color }}
+              >
+                <i className={`fas ${func.icon} text-3xl`}></i>
+              </div>
+              <div className="px-3 py-1 bg-blue-50 dark:bg-slate-800 rounded-full text-[10px] font-black text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-slate-700">
+                {func.tools.length}+ أداة
+              </div>
             </div>
-            <div className="space-y-2">
-              {cat.functions.map((func, fIdx) => (
-                <div key={fIdx} onClick={() => setActiveFunction(func)} className="flex items-center justify-between p-4 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all group cursor-pointer border border-transparent hover:border-slate-100 dark:hover:border-slate-700">
-                  <div className="flex items-center gap-4">
-                    <span className="text-xs font-bold text-slate-300 dark:text-slate-600 w-5">{fIdx + 1}.</span>
-                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-all"><i className={`fas ${func.icon} text-sm`}></i></div>
-                    <div className="flex flex-col"><span className="font-bold text-slate-700 dark:text-slate-200 text-sm group-hover:text-blue-600 transition-colors">{func.name}</span></div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    {func.isPaid && <i className="fas fa-crown text-amber-400 text-xs"></i>}
-                    <div className="w-8 h-8 rounded-full bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-slate-300 group-hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-all"><i className={`fas fa-arrow-${lang === 'ar' ? 'left' : 'right'} text-[10px]`}></i></div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <h4 className="text-2xl font-black text-slate-800 dark:text-white mb-3 group-hover:text-blue-600 transition-colors">{func.name}</h4>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium line-clamp-2">{func.desc}</p>
+            <button className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-[1.5rem] font-black flex items-center justify-center gap-3 transition-all shadow-xl shadow-blue-600/20 active:scale-95 group-hover:gap-5">
+              <i className="fas fa-bolt text-sm"></i>
+              {t.visit}
+            </button>
           </div>
         ))}
       </div>

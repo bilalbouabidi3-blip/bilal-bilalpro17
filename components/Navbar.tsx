@@ -9,11 +9,25 @@ interface NavbarProps {
   setLang: (lang: string) => void;
 }
 
+export const Logo: React.FC<{ className?: string; hideText?: boolean }> = ({ className = "h-10", hideText = false }) => (
+  <div className={`flex items-center gap-3 ${className}`}>
+    {/* Stylized SVG Logo based on the official image */}
+    <svg viewBox="0 0 100 100" className="h-full w-auto drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 10H60C75 10 85 20 85 35C85 45 80 50 75 53C82 56 88 64 88 75C88 90 78 100 63 100H20V10Z" fill="#004aad"/>
+      <path d="M45 40C45 35 48 32 52 32H75C70 32 65 35 65 40V70C65 75 70 78 75 78H52C48 78 45 75 45 70V40Z" fill="white"/>
+      <path d="M25 40C25 35 28 32 32 32H55C50 32 45 35 45 40V70C45 75 50 78 55 78H32C28 78 25 75 25 70V40Z" fill="white" opacity="0.9"/>
+      <rect x="20" y="20" width="10" height="20" fill="#004aad" transform="rotate(-45 20 20)"/>
+      <rect x="20" y="80" width="10" height="20" fill="#004aad" transform="rotate(45 20 80)"/>
+    </svg>
+    {!hideText && (
+      <span className="text-2xl font-black text-[#002d72] dark:text-blue-400 tracking-tighter brand-highlight lowercase">bayanstudy</span>
+    )}
+  </div>
+);
+
 const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLang }) => {
   const [isDark, setIsDark] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [showTermsDetail, setShowTermsDetail] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -27,47 +41,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
   const translations: any = {
     ar: { 
       home: "الرئيسية", 
-      courses: "الدروس", 
-      exercises: "التمرين", 
-      aiTools: "أدوات الذكاء", 
-      progress: "نتائجي",
-      assistant: "المساعد",
-      login: "دخول",
-      googleLogin: "الدخول بواسطة Gmail",
+      courses: "المواد الدراسية", 
+      exercises: "التمارين والامتحانات", 
+      aiTools: "أدوات الذكاء الاصطناعي", 
+      progress: "تتبع التقدم",
+      assistant: "المساعد الذكي",
+      login: "تسجيل الدخول",
+      googleLogin: "الدخول عبر حساب Google",
       loginHeader: "مرحباً بك في بيان ستادي",
-      loginSub: "سجل دخولك لمتابعة تقدمك الدراسي",
-      disclaimer: "بمتابعتك، أنت توافق على الشروط والخصوصية.",
+      loginSub: "سجل دخولك لحفظ تقدمك والوصول لميزات حصرية",
       termsLabel: "أوافق على شروط الاستخدام",
       close: "إغلاق"
-    },
-    en: { 
-      home: "Home", 
-      courses: "Lessons", 
-      exercises: "Exercises", 
-      aiTools: "AI Tools", 
-      progress: "Progress",
-      assistant: "Assistant",
-      login: "Login",
-      googleLogin: "Login with Gmail",
-      loginHeader: "Welcome to BayanStudy",
-      loginSub: "Login to track your progress",
-      disclaimer: "By continuing, you agree to our Terms.",
-      termsLabel: "I agree to terms",
-      close: "Close"
-    },
-    fr: { 
-      home: "Accueil", 
-      courses: "Cours", 
-      exercises: "Exercices", 
-      aiTools: "Outils IA", 
-      progress: "Progrès",
-      assistant: "Assistant",
-      login: "Connexion",
-      googleLogin: "Connexion avec Gmail",
-      loginHeader: "Bienvenue sur BayanStudy",
-      loginSub: "Connectez-vous pour suivre votre progrès",
-      termsLabel: "J'accepte les conditions",
-      close: "Fermer"
     }
   };
 
@@ -82,19 +66,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
     { id: AppSection.ASSISTANT, label: t.assistant, icon: 'fa-comment-dots' },
   ];
 
-  const handleGoogleLogin = () => {
-    if (!agreedToTerms) {
-      alert(lang === 'ar' ? 'يرجى الموافقة على الشروط أولاً' : 'Please agree to the terms first');
-      return;
-    }
-    alert('Google Login...');
-  };
-
   return (
     <>
       <nav className="sticky top-0 z-[100] glass shadow-sm px-4 md:px-12 py-4 flex justify-between items-center">
         <div className="flex items-center gap-4 lg:gap-12">
-          {/* Mobile Menu Button */}
           <button 
             onClick={() => setIsMenuOpen(true)}
             className="lg:hidden w-10 h-10 flex items-center justify-center text-blue-900 dark:text-white bg-gray-100 dark:bg-slate-800 rounded-xl"
@@ -102,18 +77,16 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
             <i className="fas fa-bars"></i>
           </button>
 
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setSection(AppSection.HOME)}>
-            <div className="w-9 h-9 bg-blue-700 rounded-lg flex items-center justify-center text-white text-lg font-bold shadow-lg">B</div>
-            <span className="text-xl font-black text-blue-900 dark:text-blue-400 tracking-tight hidden xs:block">BayanStudy</span>
+          <div className="cursor-pointer" onClick={() => setSection(AppSection.HOME)}>
+            <Logo className="h-9 md:h-11" />
           </div>
 
-          {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-6 font-bold text-gray-500 dark:text-gray-400 text-sm">
             {navItems.map((item) => (
               <button 
                 key={item.id}
                 onClick={() => setSection(item.id)} 
-                className={`transition-all duration-200 hover:text-blue-600 py-1 relative ${currentSection === item.id ? 'text-blue-600 after:content-[""] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-blue-600' : ''}`}
+                className={`transition-all duration-200 hover:text-[#004aad] py-1 relative ${currentSection === item.id ? 'text-[#004aad] after:content-[""] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-[#004aad]' : ''}`}
               >
                 {item.label}
               </button>
@@ -143,23 +116,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
 
           <button 
             onClick={() => setShowLoginModal(true)}
-            className="bg-blue-700 hover:bg-blue-800 text-white px-6 md:px-8 py-2.5 rounded-xl font-black shadow-lg text-sm md:text-base whitespace-nowrap"
+            className="bg-[#004aad] hover:bg-[#003580] text-white px-6 md:px-8 py-2.5 rounded-xl font-black shadow-lg text-sm md:text-base whitespace-nowrap"
           >
             {t.login}
           </button>
         </div>
       </nav>
 
-      {/* Mobile Sidebar (Side Drawer) */}
+      {/* Mobile Drawer */}
       <div className={`fixed inset-0 z-[150] lg:hidden transition-all duration-300 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-        {/* Overlay */}
         <div className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)}></div>
         
-        {/* Sidebar Content */}
         <div className={`absolute top-0 bottom-0 ${lang === 'ar' ? 'right-0' : 'left-0'} w-[280px] bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 transform ${isMenuOpen ? 'translate-x-0' : (lang === 'ar' ? 'translate-x-full' : '-translate-x-full')}`}>
           <div className="p-6 flex flex-col h-full">
             <div className="flex justify-between items-center mb-8">
-              <span className="text-xl font-black text-blue-700">BayanStudy</span>
+              <Logo className="h-8" />
               <button onClick={() => setIsMenuOpen(false)} className="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-slate-800 rounded-full text-gray-500">
                 <i className="fas fa-times"></i>
               </button>
@@ -170,7 +141,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
                 <button 
                   key={item.id}
                   onClick={() => { setSection(item.id); setIsMenuOpen(false); }}
-                  className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${currentSection === item.id ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800'}`}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${currentSection === item.id ? 'bg-[#004aad] text-white shadow-lg' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800'}`}
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${currentSection === item.id ? 'bg-white/20' : 'bg-blue-50 dark:bg-blue-900/30 text-blue-600'}`}>
                     <i className={`fas ${item.icon}`}></i>
@@ -179,25 +150,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
                 </button>
               ))}
             </div>
-
-            <div className="mt-6 pt-6 border-t border-gray-100 dark:border-slate-800">
-              <div className="grid grid-cols-3 gap-2">
-                {['ar', 'en', 'fr'].map(l => (
-                  <button 
-                    key={l}
-                    onClick={() => setLang(l)}
-                    className={`py-2 rounded-xl text-xs font-black uppercase ${lang === l ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-slate-800 text-gray-400'}`}
-                  >
-                    {l}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Login Modal */}
       {showLoginModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
           <div className="bg-white dark:bg-slate-900 w-full max-w-[450px] rounded-[2rem] shadow-2xl relative overflow-hidden animate-in zoom-in-95">
@@ -205,17 +161,15 @@ const Navbar: React.FC<NavbarProps> = ({ currentSection, setSection, lang, setLa
               <button onClick={() => setShowLoginModal(false)} className="absolute top-6 right-6 text-gray-400 hover:text-gray-900 dark:hover:text-white">
                 <i className="fas fa-times text-xl"></i>
               </button>
-              <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-2xl text-blue-600 mb-6"><i className="fas fa-user"></i></div>
+              <div className="mb-6">
+                <Logo className="h-16" hideText={true} />
+              </div>
               <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-2">{t.loginHeader}</h2>
               <p className="text-gray-500 dark:text-gray-400 mb-6 text-sm">{t.loginSub}</p>
-              <button onClick={handleGoogleLogin} className={`w-full flex items-center justify-center gap-4 py-4 px-6 rounded-2xl border-2 transition-all ${agreedToTerms ? 'bg-white dark:bg-slate-800 border-gray-100 hover:border-blue-500' : 'bg-gray-50 grayscale opacity-50'}`}>
+              <button className="w-full flex items-center justify-center gap-4 py-4 px-6 rounded-2xl border-2 transition-all bg-white dark:bg-slate-800 border-gray-100 hover:border-[#004aad]">
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/smartlock/google.svg" alt="Google" className="w-6 h-6" />
                 <span className="font-bold text-gray-700 dark:text-white">{t.googleLogin}</span>
               </button>
-              <label className="mt-6 flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={agreedToTerms} onChange={() => setAgreedToTerms(!agreedToTerms)} className="w-5 h-5 rounded text-blue-600" />
-                <span className="text-xs text-gray-500 font-bold">{t.termsLabel}</span>
-              </label>
             </div>
           </div>
         </div>

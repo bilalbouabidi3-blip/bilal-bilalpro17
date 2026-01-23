@@ -46,31 +46,13 @@ const DailyReward: React.FC<DailyRewardProps> = ({ lang }) => {
 
   const translations: any = {
     ar: {
-      title: "هدية اليوم",
-      streak: "تتابع دراسي:",
+      title: "هدية المثابرة اليومية",
+      streak: "سلسلة الحضور:",
       days: "أيام",
-      claim: "احصل على هديتك",
-      claimed: "تم الاستلام بنجاح",
-      congrats: "مبروك! حصلت على 10 نقاط ذكاء إضافية",
-      subtitle: "سجل دخولك يومياً لفتح ميزات حصرية"
-    },
-    en: {
-      title: "Daily Gift",
-      streak: "Study Streak:",
-      days: "Days",
-      claim: "Claim Your Gift",
-      claimed: "Claimed Successfully",
-      congrats: "Congrats! You got 10 extra AI points",
-      subtitle: "Log in daily to unlock exclusive features"
-    },
-    fr: {
-      title: "Cadeau du Jour",
-      streak: "Série d'étude :",
-      days: "Jours",
-      claim: "Récupérer mon cadeau",
-      claimed: "Récupéré avec succès",
-      congrats: "Félicitations ! +10 points IA",
-      subtitle: "Connectez-vous quotidiennement"
+      claim: "استلم هديتك الآن",
+      claimed: "تم استلام الهدية",
+      congrats: "رائع! حصلت على 10 نقاط ذكاء إضافية",
+      subtitle: "ثابر على الحضور يومياً لفتح ميزات دراسية حصرية"
     }
   };
 
